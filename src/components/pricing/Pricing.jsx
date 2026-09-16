@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import PaymentModal from './PaymentModal';
 import './Pricing.css';
 
 const TIERS = [
@@ -151,17 +150,10 @@ export default function Pricing() {
         businessType: ''
     });
 
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedPlan, setSelectedPlan] = useState(null);
     const [activeTierIdx, setActiveTierIdx] = useState(null); // No default until selected
     const [animating, setAnimating] = useState(false);
 
     const activeTier = activeTierIdx !== null ? TIERS[activeTierIdx] : null;
-
-    const openModal = (plan) => {
-        setSelectedPlan({ ...plan });
-        setModalOpen(true);
-    };
 
     const handleNextStep = () => {
         setAnimating(true);
@@ -268,7 +260,7 @@ export default function Pricing() {
                                         className="relative p-6 rounded-2xl flex flex-col items-center justify-center transition-all duration-300 border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-500 hover:shadow-lg hover:shadow-blue-500/10 hover:-translate-y-1 group"
                                     >
                                         <span className="font-bold text-lg mb-2 text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 text-center">{tier.name}</span>
-                                        <span className="text-sm font-semibold px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/40 group-hover:text-blue-700 dark:group-hover:text-blue-300">
+                                        <span className="text-sm font-semibold px-3 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 group-hover:bg-blue-50 dark:group-hover:bg-blue-900/40 group-hover:text-blue-700 dark:group-hover:text-blue-300 text-center">
                                             {tier.range}
                                         </span>
                                     </button>
@@ -336,16 +328,7 @@ export default function Pricing() {
 
                                     <div className="mb-6 pb-6 border-b border-slate-100 dark:border-slate-800">
                                         <div className="flex flex-col items-start gap-1 mb-4">
-                                            {plan.prefix && (
-                                                <span className="text-xs font-extrabold uppercase tracking-widest text-slate-400 dark:text-slate-500">{plan.prefix}</span>
-                                            )}
-                                            <span className={`text-4xl md:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-br drop-shadow-sm ${plan.color === 'cyan' ? 'from-teal-400 to-cyan-500 dark:from-teal-300 dark:to-cyan-400' :
-                                                    plan.color === 'blue' ? 'from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400' :
-                                                        plan.color === 'violet' ? 'from-violet-600 to-fuchsia-500 dark:from-violet-400 dark:to-fuchsia-400' :
-                                                            'from-slate-700 to-slate-900 dark:from-slate-100 dark:to-slate-300'
-                                                }`}>
-                                                {plan.price}
-                                            </span>
+                                            <span className="text-lg font-black text-slate-900 dark:text-white">Pricing shared after your call</span>
                                         </div>
                                         <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-md bg-slate-100 dark:bg-slate-800 text-xs font-bold text-slate-500 dark:text-slate-400">
                                             <i className="far fa-clock"></i> Duration: {plan.duration}
@@ -370,13 +353,13 @@ export default function Pricing() {
                                         </ul>
                                     </div>
 
-                                    <button
-                                        onClick={() => openModal(plan)}
+                                    <Link
+                                        to="/book-session"
                                         className={`pc-cta pc-cta-${plan.color} ${plan.popular ? 'pc-cta-popular' : ''}`}
                                     >
-                                        {plan.cta}
+                                        Arrange a Free Call
                                         <i className="fas fa-arrow-right pc-cta-arrow"></i>
-                                    </button>
+                                    </Link>
                                 </div>
                             ))}
                         </div>
@@ -405,15 +388,10 @@ export default function Pricing() {
                 {/* Footer note */}
                 <div className="text-center mt-16 text-sm text-slate-500 dark:text-slate-500">
                     <i className="fas fa-shield-alt mr-2" />
-                    Prices listed in Indian Rupees (₹) · Custom enterprise solutions available upon request.
+                    Subscription details are shared after your free strategy call · Custom enterprise solutions available upon request.
                 </div>
             </div>
 
-            <PaymentModal
-                isOpen={modalOpen}
-                onClose={() => { setModalOpen(false); setSelectedPlan(null); }}
-                plan={selectedPlan}
-            />
         </section>
     );
 }

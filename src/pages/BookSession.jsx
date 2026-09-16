@@ -74,7 +74,7 @@ export default function BookSession() {
   const [bookingStep,   setBookingStep]   = useState(1);
   const [selectedTime,  setSelectedTime]  = useState(null);
   const [isSubmitting,  setIsSubmitting]  = useState(false);
-  const [formData,      setFormData]      = useState({ name: '', email: '', company: '', focus: '', platform: 'Google Meet' });
+  const [formData,      setFormData]      = useState({ name: '', email: '', company: '', website: '', industry: '', location: '', focus: '', platform: 'Google Meet' });
   const dates = []; // backward-compat placeholder
 
   // ── Calendar state ──
@@ -564,6 +564,48 @@ export default function BookSession() {
                           />
                         </div>
 
+                        <div className="p-5 bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl space-y-4">
+                          <div className="flex items-center gap-2">
+                            <i className="fas fa-building text-blue-400" />
+                            <div>
+                              <h3 className="text-sm font-extrabold text-slate-900 dark:text-white">Company Profile</h3>
+                              <p className="text-[10px] text-slate-500 mt-0.5">Update your company details for a more prepared session.</p>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Website</label>
+                              <input
+                                type="url"
+                                placeholder="https://company.com"
+                                value={formData.website}
+                                onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                                className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-50/80 dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white placeholder-slate-600 transition-all text-sm"
+                              />
+                            </div>
+                            <div>
+                              <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Industry</label>
+                              <input
+                                type="text"
+                                placeholder="e.g. Retail"
+                                value={formData.industry}
+                                onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                                className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-50/80 dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white placeholder-slate-600 transition-all text-sm"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">Location</label>
+                            <input
+                              type="text"
+                              placeholder="City, Country"
+                              value={formData.location}
+                              onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                              className="w-full px-4 py-3.5 bg-slate-50 dark:bg-slate-50/80 dark:bg-slate-950/80 border border-slate-300 dark:border-slate-700/80 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-slate-900 dark:text-white placeholder-slate-600 transition-all text-sm"
+                            />
+                          </div>
+                        </div>
+
                         <div>
                           <label className="block text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2">
                             What's the #1 Thing You Want to Solve? <span className="text-slate-600">(optional)</span>
@@ -699,6 +741,21 @@ export default function BookSession() {
                       <span className="text-slate-600 dark:text-slate-400">Company</span>
                       <span className="ml-auto font-bold text-slate-900 dark:text-white">{formData.company}</span>
                     </div>
+                    {formData.website && <div className="flex items-center gap-3">
+                      <i className="fas fa-globe text-blue-400 w-4 text-center" />
+                      <span className="text-slate-600 dark:text-slate-400">Website</span>
+                      <span className="ml-auto font-bold text-slate-900 dark:text-white break-all">{formData.website}</span>
+                    </div>}
+                    {formData.industry && <div className="flex items-center gap-3">
+                      <i className="fas fa-briefcase text-purple-400 w-4 text-center" />
+                      <span className="text-slate-600 dark:text-slate-400">Industry</span>
+                      <span className="ml-auto font-bold text-slate-900 dark:text-white">{formData.industry}</span>
+                    </div>}
+                    {formData.location && <div className="flex items-center gap-3">
+                      <i className="fas fa-map-marker-alt text-amber-400 w-4 text-center" />
+                      <span className="text-slate-600 dark:text-slate-400">Location</span>
+                      <span className="ml-auto font-bold text-slate-900 dark:text-white">{formData.location}</span>
+                    </div>}
                   </div>
                 </div>
 
@@ -735,7 +792,7 @@ export default function BookSession() {
                       setBookingStep(1);
                       setSelectedDate(dates[0] || null);
                       setSelectedTime(null);
-                      setFormData({ name: '', email: '', company: '', focus: '' });
+                      setFormData({ name: '', email: '', company: '', website: '', industry: '', location: '', focus: '', platform: 'Google Meet' });
                     }}
                     className="bg-white dark:bg-slate-900 hover:bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:text-slate-900 dark:text-white px-8 py-4 rounded-2xl font-extrabold transition-all duration-300 flex items-center justify-center gap-2"
                   >
